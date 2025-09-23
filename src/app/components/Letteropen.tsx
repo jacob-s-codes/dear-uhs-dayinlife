@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function FullScreenLetter() {
   const [open, setOpen] = useState(false);
 
-  // Trigger animation once when the component mounts
+  // Trigger animation once after 5 seconds
   useEffect(() => {
-    const timer = setTimeout(() => setOpen(true), 500); // small delay for effect
+    const timer = setTimeout(() => setOpen(true), 5000); // 5s delay
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,8 +20,8 @@ export default function FullScreenLetter() {
           height: open ? "100vh" : "11rem",
           borderRadius: open ? "0px" : "0.5rem",
         }}
-        transition={{ duration: 1, ease: "easeInOut" }}
-        className="relative bg-white border border-gray-400 shadow-xl overflow-hidden"
+        transition={{ duration: 2, ease: "easeInOut" }}
+        className="relative bg-white border border-gray-400 shadow-xl overflow-hidden flex items-center justify-center"
       >
         {/* Flap */}
         <motion.div
@@ -32,6 +32,20 @@ export default function FullScreenLetter() {
           style={{ transformStyle: "preserve-3d" }}
         />
 
+        {/* FRONT text ("Ishan") */}
+        <AnimatePresence>
+          {!open && (
+            <motion.p
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-3xl font-bold font-[cursive] text-gray-800 z-10"
+            >
+              Ishan
+            </motion.p>
+          )}
+        </AnimatePresence>
+
         {/* Inside content */}
         <AnimatePresence>
           {open && (
@@ -39,12 +53,22 @@ export default function FullScreenLetter() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 0.8 }}
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center"
             >
-              <p className="text-2xl font-semibold text-gray-700">
-                Dear Ishan, 
-               </p>
-               <p className="pt-36 text-2xl font-semibold text-gray-700">Thank you for your letter. I have your response wating for you. <span><a href="/jacobtube" className="hover:text-blue-500">Click me.</a></span></p>
+              <p className="text-2xl font-semibold text-gray-700 font-[cursive]">
+                Dear Ishan,
+              </p>
+              <p className="pt-12 text-xl font-medium text-gray-700 font-[cursive]">
+                Thank you for your letter. I have your response waiting for you.{" "}
+                <span>
+                  <a
+                    href="/jacobtube"
+                    className="text-blue-600 hover:underline"
+                  >
+                    Click me.
+                  </a>
+                </span>
+              </p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -52,51 +76,3 @@ export default function FullScreenLetter() {
     </div>
   );
 }
-
-
-// "use client";
-// import { useState } from "react";
-// import { motion, AnimatePresence } from "framer-motion";
-
-// export default function FullScreenLetter() {
-//   const [open, setOpen] = useState(false);
-
-//   return (
-//     <div className="h-screen flex items-center justify-center bg-gray-100 overflow-hidden">
-//       <motion.div
-//         layout
-//         transition={{ duration: 1, ease: "easeInOut" }}
-//         className={`relative bg-white border border-gray-400 shadow-xl rounded-lg cursor-pointer ${
-//           open ? "w-screen h-screen" : "w-72 h-44"
-//         }`}
-//         onClick={() => setOpen(!open)}
-//       >
-//         {/* Flap */}
-//         <motion.div
-//           initial={false}
-//           animate={{ rotateX: open ? -180 : 0 }}
-//           transition={{ duration: 0.8, ease: "easeInOut" }}
-//           className="absolute top-0 left-0 w-full h-1/2 bg-gray-300 border-b border-gray-400 rounded-t-lg origin-top"
-//           style={{ transformStyle: "preserve-3d" }}
-//         />
-
-//         {/* Content inside */}
-//         <AnimatePresence>
-//           {open && (
-//             <motion.div
-//               initial={{ opacity: 0 }}
-//               animate={{ opacity: 1 }}
-//               exit={{ opacity: 0 }}
-//               transition={{ delay: 0.8, duration: 0.6 }}
-//               className="absolute inset-0 flex items-center justify-center p-8"
-//             >
-//               <p className="text-2xl font-semibold text-gray-700">
-//                 Dear Ishan, Thank you for your letter. I have your response wating for you. <span><a href="/jacobtube" className="hover:text-blue-500">Click me.</a></span>
-//               </p>
-//             </motion.div>
-//           )}
-//         </AnimatePresence>
-//       </motion.div>
-//     </div>
-//   );
-// }
