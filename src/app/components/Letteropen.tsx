@@ -1,0 +1,102 @@
+"use client";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+export default function FullScreenLetter() {
+  const [open, setOpen] = useState(false);
+
+  // Trigger animation once when the component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => setOpen(true), 500); // small delay for effect
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="h-screen flex items-center justify-center bg-gray-100 overflow-hidden">
+      <motion.div
+        initial={{ width: "18rem", height: "11rem" }} // envelope size
+        animate={{
+          width: open ? "100vw" : "18rem",
+          height: open ? "100vh" : "11rem",
+          borderRadius: open ? "0px" : "0.5rem",
+        }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+        className="relative bg-white border border-gray-400 shadow-xl overflow-hidden"
+      >
+        {/* Flap */}
+        <motion.div
+          initial={{ rotateX: 0 }}
+          animate={{ rotateX: open ? -180 : 0 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+          className="absolute top-0 left-0 w-full h-1/2 bg-blue-300 border-b border-blue-400 origin-top"
+          style={{ transformStyle: "preserve-3d" }}
+        />
+
+        {/* Inside content */}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 0.8 }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <p className="text-2xl font-semibold text-gray-700">
+                Dear Ishan, 
+               </p>
+               <p className="pt-36 text-2xl font-semibold text-gray-700">Thank you for your letter. I have your response wating for you. <span><a href="/jacobtube" className="hover:text-blue-500">Click me.</a></span></p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </div>
+  );
+}
+
+
+// "use client";
+// import { useState } from "react";
+// import { motion, AnimatePresence } from "framer-motion";
+
+// export default function FullScreenLetter() {
+//   const [open, setOpen] = useState(false);
+
+//   return (
+//     <div className="h-screen flex items-center justify-center bg-gray-100 overflow-hidden">
+//       <motion.div
+//         layout
+//         transition={{ duration: 1, ease: "easeInOut" }}
+//         className={`relative bg-white border border-gray-400 shadow-xl rounded-lg cursor-pointer ${
+//           open ? "w-screen h-screen" : "w-72 h-44"
+//         }`}
+//         onClick={() => setOpen(!open)}
+//       >
+//         {/* Flap */}
+//         <motion.div
+//           initial={false}
+//           animate={{ rotateX: open ? -180 : 0 }}
+//           transition={{ duration: 0.8, ease: "easeInOut" }}
+//           className="absolute top-0 left-0 w-full h-1/2 bg-gray-300 border-b border-gray-400 rounded-t-lg origin-top"
+//           style={{ transformStyle: "preserve-3d" }}
+//         />
+
+//         {/* Content inside */}
+//         <AnimatePresence>
+//           {open && (
+//             <motion.div
+//               initial={{ opacity: 0 }}
+//               animate={{ opacity: 1 }}
+//               exit={{ opacity: 0 }}
+//               transition={{ delay: 0.8, duration: 0.6 }}
+//               className="absolute inset-0 flex items-center justify-center p-8"
+//             >
+//               <p className="text-2xl font-semibold text-gray-700">
+//                 Dear Ishan, Thank you for your letter. I have your response wating for you. <span><a href="/jacobtube" className="hover:text-blue-500">Click me.</a></span>
+//               </p>
+//             </motion.div>
+//           )}
+//         </AnimatePresence>
+//       </motion.div>
+//     </div>
+//   );
+// }
