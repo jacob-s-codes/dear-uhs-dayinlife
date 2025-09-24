@@ -55,10 +55,10 @@ export default function FullScreenLetter() {
               transition={{ delay: 1, duration: 0.8 }}
               className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center"
             >
-              <p className="text-2xl font-semibold text-gray-700 font-[cursive]">
+              <p className="text-6xl font-semibold text-gray-700 font-[cursive]">
                 Dear Ishan,
               </p>
-              <p className="pt-12 text-xl font-medium text-gray-700 font-[cursive]">
+              <p className="pt-12 text-3xl font-medium text-gray-700 font-[cursive]">
                 Thank you for your letter. I have your response waiting for you.{" "}
                 <span>
                   <a
